@@ -1,5 +1,6 @@
 import random
 
+
 def shuffle_duration(min, max, songs):
     new_song_ids = []
     total_duration = 0
