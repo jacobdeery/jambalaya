@@ -1,0 +1,17 @@
+name: Jambalaya Example
+blocks:
+  - type: fixed
+    playlist: Source Playlist 1
+  - type: shuffle-all
+    songs:
+      - [Roselia, FIRE BIRD]
+      - [Metric, Underline the Black]
+      - [Streetlight Manifesto, Watch It Crash]
+  - type: shuffle-duration
+    min: 9:00
+    max: 11:00
+    songs:
+      - [Itsuki Natsume, HAPPY ENFORCER]
+      - [Sabaton, A Ghost In The Trenches]
+      - [Vulfpeck - Animal Spirits]
+      - [2jL9sjFc2LZsQBGbQnrjXR]  # GFRIEND - Time for the moon night
