@@ -1,4 +1,5 @@
 import random
+from datetime import datetime, timedelta
 
 import yaml
 
@@ -24,18 +25,26 @@ def parse_songs(client, songs):
         song_items.append(parse_song(client, song))
     return song_items
 
+def parse_playlist(client, playlist):
+    return client.get_playlist_songs(name=playlist)
+
 def get_song_ids(client, spec):
     pl_song_ids = []
 
     for block in spec['blocks']:
+        if 'songs' in block:
+            new_song_items = parse_songs(client, block['songs'])
+        elif 'playlist' in block:
+            new_song_items = parse_playlist(client, block['playlist'])
+
         if block['type'] == 'fixed':
-            new_song_ids = [song['id'] for song in parse_songs(client, block['songs'])]
+            new_song_ids = [song['id'] for song in new_song_items]
         elif block['type'] == 'shuffle-all':
-            new_song_ids = [song['id'] for song in parse_songs(client, block['songs'])]
+            new_song_ids = [song['id'] for song in new_song_items]
             random.shuffle(new_song_ids)
         elif block['type'] == 'shuffle-duration':
-            new_song_items = parse_songs(client, block['songs'])
-            new_song_ids = jb.shuffle_duration(block['min'], block['max'], new_song_items)
+            shuffled_songs = jb.shuffle_duration(block['min'], block['max'], new_song_items)
+            new_song_ids = [song['id'] for song in shuffled_songs]
 
         pl_song_ids.extend(new_song_ids)
 

@@ -28,5 +28,12 @@ class Client:
             if pl['name'] == name:
                 return pl
 
+    def get_playlist_songs(self, name=None, uid=None):
+        if name is not None:
+            uid = self.get_playlist(name=name)['uri']
+
+        resp = self._sp.playlist_tracks(uid)
+        return [track['track'] for track in resp['items']]
+
     def set_playlist(self, pl_id, t_ids):
         self._sp.playlist_replace_items(pl_id, t_ids)
